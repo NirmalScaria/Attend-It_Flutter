@@ -19,11 +19,11 @@ class _CheckLoginPageState extends State<CheckLoginPage> {
   void redirectIfLoggedin() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.getString('student_name')!=null){
-      Navigator.push(context,MaterialPageRoute(builder: (context) =>  HomePage()));
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  HomePage()));
     }
     else{
 
-      Navigator.push(context,MaterialPageRoute(builder: (context) =>  DetailsFormPage()));
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  DetailsFormPage()));
     }
   }
   @override
