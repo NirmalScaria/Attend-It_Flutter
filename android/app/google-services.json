@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "678320991295",
+    "project_id": "attend-it-ff221",
+    "storage_bucket": "attend-it-ff221.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678320991295:android:7d667de825e0fe56995c8a",
+        "android_client_info": {
+          "package_name": "com.example.attendit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678320991295-r71khuqgt3b0okflf09ejutkjf2g02mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdpPTWKjQB8SMqUSVQBZofsoipax07-Uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678320991295-r71khuqgt3b0okflf09ejutkjf2g02mf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
