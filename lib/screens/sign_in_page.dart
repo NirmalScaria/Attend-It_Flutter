@@ -1,9 +1,10 @@
 import 'package:attendit/screens/finger_print_page.dart';
+import 'package:attendit/screens/homepage.dart';
 import 'package:attendit/screens/sign_in_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'CheckLoginPage.dart';
 class signInPage extends StatefulWidget {
   signInPage({Key? key}) : super(key: key);
 
@@ -12,6 +13,7 @@ class signInPage extends StatefulWidget {
 }
 
 class _signInPageState extends State<signInPage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,7 @@ class _signInPageState extends State<signInPage> {
                 child: Text('some error occured'),
               );
             } else if (snapshot.hasData) {
-              return const fingerPrintPage();
+              return const  CheckLoginPage();
             } else {
               return Center(
                 child: ElevatedButton(
