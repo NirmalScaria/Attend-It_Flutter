@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'globalValues.dart';
 import 'package:attendit/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,6 +47,8 @@ class _DetailsFormPageState extends State<DetailsFormPage> {
       SharedPreferences prefs=await SharedPreferences.getInstance();
         await prefs.setString('student_name', name.text);
         await prefs.setString('roll_no',rollno.text);
+        student_Name=name.text;
+        roll_no=rollno.text;
       Navigator.push(context,MaterialPageRoute(builder: (context) =>  HomePage())); 
     }
   }
