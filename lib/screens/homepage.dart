@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'dart:developer' as developer;
+import 'globalValues.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,6 +16,14 @@ class _HomePageState extends State<HomePage> {
   final qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   Barcode? barcode;
+
+  //Remove this
+  @override
+  void initState() {
+    developer.log('Student name : $student_Name');
+    developer.log("Roll no : $roll_no");
+  }
+  //till here
 
   @override
   void dispose() {
