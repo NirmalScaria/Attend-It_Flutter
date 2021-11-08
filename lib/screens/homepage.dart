@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:developer' as developer;
 import 'globalValues.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,14 +56,66 @@ class _HomePageState extends State<HomePage> {
 
   void onQrViewCreated(QRViewController controller) {
     var foo = List<String>.empty(growable: true);
-
+    var presenttime;
+    var qrtime;
+    var timedifference;
     setState(() => this.controller = controller);
     controller.scannedDataStream.first.then((value) => {
           if (value.code != null)
             {
               value.code?.split("/").forEach((element) => foo.add(element)),
               print(foo),
-              apiCall(foo),
+              presenttime = DateTime.now(),
+              foo[3] = foo[3].replaceAll('-', '/'),
+              print(foo[3] + ' ' + foo[4]),
+              qrtime = DateTime.parse(
+                  DateFormat('yyyy-MM-dd').format(presenttime) +
+                      ' ' +
+                      '23:59:59'),
+              //qrtime = DateTime.parse('2021-10-08' + ' ' + foo[4]),
+              presenttime = DateTime.now(),
+              timedifference = presenttime.difference(qrtime).inSeconds,
+              if (timedifference < 30)
+                {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Confirm submit?'),
+                      content: Text(
+                          'You are about to submit attendance for ${foo[2]} on ${foo[3]}'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, 'OK');
+                            apiCall(foo);
+                          },
+                          child: const Text('Submit'),
+                        ),
+                      ],
+                    ),
+                  ),
+                }
+              else
+                {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Time limit exceeded'),
+                      content: Text(
+                          'The time limite for submitting attendance has exceeded. Please contact your teacher.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'OK'),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  ),
+                },
             },
         });
   }
@@ -75,6 +128,20 @@ class _HomePageState extends State<HomePage> {
           .doc(foo[1])
           .collection(foo[2] + foo[3])
           .add({"NAME": student_Name, "ROLL NO": roll_no});
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Successful'),
+          content: Text(
+              'You have successfully marked the attendace for this class.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     } catch (e) {
       print(e);
     }
