@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  CollectionReference qrLink = FirebaseFirestore.instance.collection("qrlink");
+  CollectionReference qrLink = FirebaseFirestore.instance.collection("courses");
   final qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   Barcode? barcode;
@@ -54,18 +54,27 @@ class _HomePageState extends State<HomePage> {
       );
 
   void onQrViewCreated(QRViewController controller) {
+    var foo = List<String>.empty(growable: true);
+
     setState(() => this.controller = controller);
     controller.scannedDataStream.first.then((value) => {
           if (value.code != null)
             {
-              apiCall(value),
+              value.code?.split("/").forEach((element) => foo.add(element)),
+              print(foo),
+              apiCall(foo),
             },
         });
   }
 
-  void apiCall(Barcode link) {
+  void apiCall(List<String> foo) {
     try {
-      qrLink.add({"link": link.code});
+      qrLink
+          .doc(foo[0])
+          .collection("subject")
+          .doc(foo[1])
+          .collection(foo[2] + foo[3])
+          .add({"NAME": student_Name, "ROLL NO": roll_no});
     } catch (e) {
       print(e);
     }
