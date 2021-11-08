@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:attendit/screens/finger_print_page.dart';
+
 import 'globalValues.dart';
 import 'package:attendit/screens/homepage.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class _DetailsFormPageState extends State<DetailsFormPage> {
   void redirectIfLoggedin() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if(prefs.getString('student_name')!=null){
-      Navigator.push(context,MaterialPageRoute(builder: (context) =>  HomePage()));
+      Navigator.push(context,MaterialPageRoute(builder: (context) =>  fingerPrintPage()));
     }
   }
   var errormsg="";
@@ -49,7 +51,7 @@ class _DetailsFormPageState extends State<DetailsFormPage> {
         await prefs.setString('roll_no',rollno.text);
         student_Name=name.text;
         roll_no=rollno.text;
-      Navigator.push(context,MaterialPageRoute(builder: (context) =>  HomePage())); 
+      Navigator.push(context,MaterialPageRoute(builder: (context) =>  fingerPrintPage())); 
     }
   }
   @override

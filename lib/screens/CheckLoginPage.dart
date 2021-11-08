@@ -1,3 +1,4 @@
+import 'package:attendit/screens/finger_print_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'homepage.dart';
@@ -21,7 +22,7 @@ class _CheckLoginPageState extends State<CheckLoginPage> {
     if(prefs.getString('student_name')!=null){
       student_Name = prefs.getString('student_name')!;
       roll_no = prefs.getString('roll_no')!;
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  HomePage()));
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  fingerPrintPage()));
     }
     else{
       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  DetailsFormPage()));
