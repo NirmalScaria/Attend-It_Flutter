@@ -68,8 +68,11 @@ class _HomePageState extends State<HomePage> {
               presenttime = DateTime.now(),
               foo[3] = foo[3].replaceAll('-', '/'),
               print(foo[3] + ' ' + foo[4]),
-              //qrtime = DateTime.parse(DateFormat('yyyy-MM-dd').format(presenttime) +' ' +'23:59:59'),
-              qrtime = DateTime.parse(DateFormat('yyyy-MM-dd').format(presenttime)+ ' ' + foo[4]),
+              qrtime = DateTime.parse(
+                  DateFormat('yyyy-MM-dd').format(presenttime) +
+                      ' ' +
+                      '23:59:59'),
+              //qrtime = DateTime.parse('2021-10-08' + ' ' + foo[4]),
               presenttime = DateTime.now(),
               timedifference = presenttime.difference(qrtime).inSeconds,
               if (timedifference < 30)
@@ -102,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                       title: const Text('Time limit exceeded'),
-                      content: Text(
+                      content: const Text(
                           'The time limite for submitting attendance has exceeded. Please contact your teacher.'),
                       actions: <Widget>[
                         TextButton(
@@ -117,19 +120,28 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  void apiCall(List<String> foo) {
+  void apiCall(List<String> foo) async {
+    foo[3] = foo[3].replaceAll('/', '-');
     try {
       qrLink
           .doc(foo[0])
           .collection("subject")
           .doc(foo[1])
           .collection(foo[2] + foo[3])
-          .add({"NAME": student_Name, "ROLL NO": roll_no});
+          .add({"name": student_Name, "rollno": roll_no});
+
+      var data = await qrLink
+          .doc(foo[0])
+          .collection("subject")
+          .doc(foo[1])
+          .collection("arrayofdates")
+          .add({"date": foo[3], 'subjectname': foo[2]});
+
       showDialog(
         context: context,
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Successful'),
-          content: Text(
+          content: const Text(
               'You have successfully marked the attendace for this class.'),
           actions: <Widget>[
             TextButton(
